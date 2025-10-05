@@ -1,148 +1,277 @@
-# Book Review Platform - Backend API
+📚 Book Review Platform – Backend API
 
-## Setup Instructions
+A powerful RESTful API built with Node.js, Express, and MongoDB that powers the Book Review Platform.
+It handles authentication, book management, and user reviews with full CRUD operations and JWT-based security.
 
-### Prerequisites
-- Node.js (v14 or higher)
-- MongoDB (local installation or MongoDB Atlas account)
+🚀 Features
 
-### Installation
+🔐 User Authentication (Signup / Login / JWT)
 
-1. Navigate to the backend directory:
-\`\`\`bash
+📖 Book Management (CRUD operations)
+
+📝 Review Management (CRUD operations)
+
+⭐ Dynamic average rating & review count updates
+
+⚙️ Secure password hashing using bcrypt
+
+🛡️ Middleware-based route protection
+
+🧩 MongoDB schema-based data validation
+
+🔄 Pagination, search, sorting, and filtering for books
+
+🧠 Tech Stack
+
+Backend Framework: Node.js + Express
+
+Database: MongoDB / Mongoose
+
+Authentication: JWT (JSON Web Token)
+
+Environment Management: dotenv
+
+Security: bcrypt for password hashing
+
+Development Tools: Nodemon
+
+⚙️ Setup Instructions
+📋 Prerequisites
+
+Ensure you have the following installed:
+
+Node.js (v14 or higher)
+
+MongoDB (local or MongoDB Atlas)
+
+🛠️ Installation
+
+Navigate to backend directory:
+
 cd backend
-\`\`\`
 
-2. Install dependencies:
-\`\`\`bash
+
+Install dependencies:
+
 npm install
-\`\`\`
 
-3. Create a `.env` file based on `.env.example`:
-\`\`\`bash
+
+Create a .env file:
+
 cp .env.example .env
-\`\`\`
 
-4. Update the `.env` file with your MongoDB connection string and JWT secret.
 
-### Running the Server
+Configure environment variables inside .env:
 
-Development mode (with auto-reload):
-\`\`\`bash
+PORT=5000
+PORT=5000
+MONGO_URI=mongodb://localhost:27017/book-review-platform
+JWT_SECRET=adi1234
+
+
+▶️ Running the Server
+Development mode (auto reload):
 npm run dev
-\`\`\`
 
 Production mode:
-\`\`\`bash
 npm start
-\`\`\`
 
-The server will run on `http://localhost:5000` by default.
 
-## API Documentation
+Server runs by default at http://localhost:5000
 
-### Authentication Endpoints
+🧩 API Endpoints
+🔑 Authentication Routes
+➤ Register User
 
-#### Register User
-- **POST** `/api/auth/signup`
-- **Body**: `{ name, email, password }`
-- **Response**: `{ success, message, token, user }`
+POST /api/auth/signup
+Body:
 
-#### Login User
-- **POST** `/api/auth/login`
-- **Body**: `{ email, password }`
-- **Response**: `{ success, message, token, user }`
+{
+  "name": "John Doe",
+  "email": "john@example.com",
+  "password": "123456"
+}
 
-#### Get Current User
-- **GET** `/api/auth/me`
-- **Headers**: `Authorization: Bearer <token>`
-- **Response**: `{ success, user }`
 
-### Book Endpoints
+Response:
 
-#### Get All Books (with pagination, search, filter)
-- **GET** `/api/books?page=1&limit=5&search=query&genre=Fiction&sortBy=rating`
-- **Response**: `{ success, data, pagination }`
+{
+  "success": true,
+  "message": "User registered successfully",
+  "token": "<jwt_token>",
+  "user": { "id": "123", "name": "John Doe" }
+}
 
-#### Get Single Book
-- **GET** `/api/books/:id`
-- **Response**: `{ success, data }`
+➤ Login User
 
-#### Add Book
-- **POST** `/api/books`
-- **Headers**: `Authorization: Bearer <token>`
-- **Body**: `{ title, author, description, genre, publishedYear }`
-- **Response**: `{ success, message, data }`
+POST /api/auth/login
+Body:
 
-#### Update Book
-- **PUT** `/api/books/:id`
-- **Headers**: `Authorization: Bearer <token>`
-- **Body**: `{ title, author, description, genre, publishedYear }`
-- **Response**: `{ success, message, data }`
+{
+  "email": "john@example.com",
+  "password": "123456"
+}
 
-#### Delete Book
-- **DELETE** `/api/books/:id`
-- **Headers**: `Authorization: Bearer <token>`
-- **Response**: `{ success, message }`
 
-### Review Endpoints
+Response:
 
-#### Get Reviews for a Book
-- **GET** `/api/reviews/book/:bookId`
-- **Response**: `{ success, data }`
+{
+  "success": true,
+  "message": "Login successful",
+  "token": "<jwt_token>",
+  "user": { "id": "123", "name": "John Doe" }
+}
 
-#### Get Reviews by User
-- **GET** `/api/reviews/user/:userId`
-- **Response**: `{ success, data }`
+➤ Get Current User
 
-#### Add Review
-- **POST** `/api/reviews`
-- **Headers**: `Authorization: Bearer <token>`
-- **Body**: `{ bookId, rating, reviewText }`
-- **Response**: `{ success, message, data }`
+GET /api/auth/me
+Header: Authorization: Bearer <token>
 
-#### Update Review
-- **PUT** `/api/reviews/:id`
-- **Headers**: `Authorization: Bearer <token>`
-- **Body**: `{ rating, reviewText }`
-- **Response**: `{ success, message, data }`
+Response:
 
-#### Delete Review
-- **DELETE** `/api/reviews/:id`
-- **Headers**: `Authorization: Bearer <token>`
-- **Response**: `{ success, message }`
+{
+  "success": true,
+  "user": { "id": "123", "name": "John Doe", "email": "john@example.com" }
+}
 
-## Database Schema
+📚 Book Routes
+➤ Get All Books
 
-### User
-- name: String (required)
-- email: String (required, unique)
-- password: String (required, hashed)
-- createdAt: Date
+GET /api/books?page=1&limit=5&search=harry&genre=Fiction&sortBy=rating
 
-### Book
-- title: String (required)
-- author: String (required)
-- description: String (required)
-- genre: String (enum, required)
-- publishedYear: Number (required)
-- addedBy: ObjectId (ref: User)
-- averageRating: Number (0-5)
-- reviewCount: Number
-- createdAt: Date
-- updatedAt: Date
+Response:
 
-### Review
-- bookId: ObjectId (ref: Book)
-- userId: ObjectId (ref: User)
-- rating: Number (1-5, required)
-- reviewText: String (required)
-- createdAt: Date
-- updatedAt: Date
+{
+  "success": true,
+  "data": [],
+  "pagination": { "page": 1, "limit": 5, "total": 10 }
+}
 
-## Security Features
-- Password hashing with bcrypt
-- JWT authentication
-- Protected routes with middleware
-- Input validation
-- Error handling
+➤ Get Single Book
+
+GET /api/books/:id
+
+➤ Add Book
+
+POST /api/books
+Header: Authorization: Bearer <token>
+Body:
+
+{
+  "title": "Harry Potter",
+  "author": "J.K. Rowling",
+  "description": "A fantasy novel series",
+  "genre": "Fiction",
+  "publishedYear": 2000
+}
+
+➤ Update Book
+
+PUT /api/books/:id
+Header: Authorization: Bearer <token>
+
+➤ Delete Book
+
+DELETE /api/books/:id
+Header: Authorization: Bearer <token>
+
+📝 Review Routes
+➤ Get Reviews for a Book
+
+GET /api/reviews/book/:bookId
+
+➤ Get Reviews by a User
+
+GET /api/reviews/user/:userId
+
+➤ Add Review
+
+POST /api/reviews
+Header: Authorization: Bearer <token>
+Body:
+
+{
+  "bookId": "653e5c2bff91b3e89d1a7c9b",
+  "rating": 5,
+  "reviewText": "Amazing read!"
+}
+
+➤ Update Review
+
+PUT /api/reviews/:id
+Header: Authorization: Bearer <token>
+
+➤ Delete Review
+
+DELETE /api/reviews/:id
+Header: Authorization: Bearer <token>
+
+🧱 Database Schema
+👤 User
+Field	Type	Description
+name	String	Required
+email	String	Required, unique
+password	String	Hashed
+createdAt	Date	Auto-generated
+📘 Book
+Field	Type	Description
+title	String	Required
+author	String	Required
+description	String	Required
+genre	String	Enum
+publishedYear	Number	Required
+addedBy	ObjectId (User)	Reference
+averageRating	Number	0–5
+reviewCount	Number	Count of reviews
+createdAt	Date	Auto-generated
+🗒️ Review
+Field	Type	Description
+bookId	ObjectId (Book)	Reference
+userId	ObjectId (User)	Reference
+rating	Number	1–5
+reviewText	String	Required
+createdAt	Date	Auto-generated
+🔒 Security Features
+
+Passwords hashed using bcrypt
+
+JWT-based authentication
+
+Protected routes using middleware
+
+Input validation
+
+Centralized error handling
+
+🧪 Testing the API
+
+You can test all routes using:
+
+Postman
+
+Thunder Client (VS Code extension)
+
+cURL
+
+🧰 Folder Structure
+backend/
+│
+├── config/
+│   └── db.js
+├── controllers/
+│   ├── authController.js
+│   ├── bookController.js
+│   └── reviewController.js
+├── middleware/
+│   ├── auth.js
+│   └── errorHandler.js
+├── models/
+│   ├── User.js
+│   ├── Book.js
+│   └── Review.js
+├── routes/
+│   ├── authRoutes.js
+│   ├── bookRoutes.js
+│   └── reviewRoutes.js
+├── server.js
+└── .env
