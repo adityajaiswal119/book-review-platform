@@ -1,57 +1,39 @@
-# BookReview Frontend
+# 📚 Book Review Platform – Frontend
 
-React frontend for the Book Review Platform built with Vite, React Router, and Tailwind CSS.
+A modern **React-based frontend** for the **Book Review Platform**, built using **Vite**, **React Router**, and **Tailwind CSS**.  
+This app provides an intuitive, responsive, and elegant interface for users to browse, review, and rate books.
 
-## Features
+---
 
-- User authentication (signup/login)
-- Browse books with search, filter, and pagination
-- View book details with reviews and rating charts
-- Add, edit, and delete books
-- Write and manage reviews
-- User profile with statistics
-- Dark/light mode toggle
-- Responsive design
+## 🚀 Features
 
-## Setup
+- 🔐 **User Authentication** – Sign up, log in, and manage your profile  
+- 📖 **Browse Books** – Search, filter, and paginate through book listings  
+- ⭐ **Book Details** – View reviews and visual rating charts  
+- ✍️ **Review Management** – Add, edit, and delete your reviews  
+- 📊 **User Dashboard** – See reading and review statistics  
+- 🌗 **Dark/Light Mode** – Toggle between themes easily  
+- 📱 **Responsive Design** – Fully optimized for mobile and desktop  
 
-1. Install dependencies:
-\`\`\`bash
-npm install
-\`\`\`
+---
 
-2. Create `.env` file:
-\`\`\`bash
-cp .env.example .env
-\`\`\`
+## 🛠️ Tech Stack
 
-3. Update the API URL in `.env` if needed (default: http://localhost:5000/api)
+| Category | Technologies |
+|-----------|---------------|
+| **Frontend** | React 18, Vite, React Router v6 |
+| **Styling** | Tailwind CSS |
+| **HTTP Client** | Axios |
+| **Charts & Icons** | Recharts, Lucide React |
+| **State Management** | React Hooks / Context API |
+| **Environment** | Node.js + Vite |
 
-4. Start development server:
-\`\`\`bash
-npm run dev
-\`\`\`
+---
 
-The app will run on http://localhost:3000
+## ⚙️ Setup & Installation
 
-## Build for Production
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/adityajaiswal119/book-review-platform.git
+   cd book-review-platform/frontend
 
-\`\`\`bash
-npm run build
-\`\`\`
-
-The build output will be in the `dist` folder.
-
-## Tech Stack
-
-- React 18
-- Vite
-- React Router v6
-- Axios
-- Tailwind CSS
-- Recharts
-- Lucide React Icons
-\`\`\`
-
-```typescriptreact file="app/page.tsx" isDeleted="true"
-...deleted...
